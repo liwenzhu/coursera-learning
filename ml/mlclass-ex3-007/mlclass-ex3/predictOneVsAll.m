@@ -30,10 +30,8 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
-K = num_labels;
 
-
-[x,p] = max(sigmoid(X * all_theta'), [], 2);
+[max_values,p] = max(X * all_theta', [], 2);
 
 
 % =========================================================================

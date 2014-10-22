@@ -29,7 +29,7 @@ m = size(X, 1);
 X = [ones(m, 1) X];
 X = sigmoid(X * Theta2');
 
-[tmp, p] = max(X, [], 2);
+[max_value, p] = max(X, [], 2);
 
 
 
