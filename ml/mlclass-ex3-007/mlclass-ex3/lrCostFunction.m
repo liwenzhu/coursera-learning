@@ -45,7 +45,6 @@ J = J + (lambda * sum(theta(2:end) .^ 2)) / (2 * m);
 
 temp = theta;
 temp(1) = 0;
-
 grad = (X' * (hypo - y)) / m;
 
 % regularization
