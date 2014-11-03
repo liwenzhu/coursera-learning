@@ -62,15 +62,47 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Part 1:
+a_1 = [ones(m, 1), X];
+z_2 = a_1 * Theta1';
+a_2 = [ones(m, 1), sigmoid(z_2)];
+z_3 = a_2 * Theta2';
+a_3 = sigmoid(z_3);
+hypo = a_3;
 
+y_matrix = eye(num_labels)(y, :);
 
+% cost function
+J = sum(sum((-y_matrix .* log(hypo) - (1-y_matrix) .* log(1- hypo)))) / m
 
+% regularized
+J = J + lambda * (sum(sum(Theta1(:,2:end) .^ 2)) + sum(sum(Theta2(:, 2:end) .^ 2))) / (2 * m);
+% Part 2:
 
+delta_3 = a_3 .- y_matrix;
+% 5000 * 10
+%size(delta_3)
+% 10 * 26
+%size(Theta2)
 
+% 5000 * 25
+%size(z_2)
+%size(sigmoidGradient(z_2))
 
+delta_2 = (delta_3 * Theta2(:, 2:end)) .* sigmoidGradient(z_2);
 
+%size(delta_2)
 
+d_2 = delta_3' * a_2;
+d_1 = delta_2' * a_1;
 
+Theta1_grad = d_1 / m;
+Theta2_grad = d_2 / m;
+
+Theta1_reg = [zeros(size(Theta1, 1), 1), Theta1(:, 2:end)];
+Theta2_reg = [zeros(size(Theta2,1),1),Theta2(:, 2:end)];
+Theta1_grad = Theta1_grad + lambda * Theta1_reg / m;
+Theta2_grad = Theta2_grad + lambda * Theta2_reg / m;
 
 
 
