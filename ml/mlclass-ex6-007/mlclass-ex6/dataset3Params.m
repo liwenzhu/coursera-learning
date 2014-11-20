@@ -23,10 +23,29 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+valuePool = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+valueSize = size(valuePool, 2);
+bestC = C;
+bestSigma = sigma;
+bestMean = 100;
 
+for i = 1:valueSize,
+  for j = 1:valueSize,
+    C = valuePool(i);
+    sigma = valuePool(j);
+    model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
+    predictions = svmPredict(model, Xval);
+    error = mean(double(predictions ~= yval));
+    if error < bestMean,
+      bestMean = error;
+      bestC = C;
+      bestSigma = sigma;
+    end;
+  end;
+end;
 
-
-
+C = bestC;
+sigma = bestSigma;
 
 
 % =========================================================================
