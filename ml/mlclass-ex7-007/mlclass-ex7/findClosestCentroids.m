@@ -21,15 +21,11 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-centroids
-size(X)
-size(K)
 for i = 1:size(X,1),
-  maxVal = 0;
-  for j = 1:size(centroids),
-    value = 
-  end;
-  idx(i) = 33;
+  x = repmat(X(i,:), K, 1);
+  x = (x-centroids) .^ 2;
+  x = sum(x, 2);
+  [maxVal, idx(i)] = min(x);
 end;
 
 
